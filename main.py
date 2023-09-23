@@ -2,7 +2,8 @@
 los iteradores son un objeto que se puede iterar o recorrer y permiten un ahorro de memoria
 ya que sacan los valores de uno en uno a medida que se necesitan
 """
-from typing import Iterator, Generator
+from typing import Iterator, Generator, Any
+import sys
 
 
 NAMES = [
@@ -17,10 +18,13 @@ NAMES = [
     "Ileana",
     "Joseph",
 ]
+
+
 CITIES = [
     "Schenectady",
     "Albany",
 ]
+
 
 def gen_squares(n: int) -> Iterator[int]:
     i = 1
@@ -52,6 +56,13 @@ def main() -> None:
         print(next(cities_iterator))
     except StopIteration as err:
         print(err)
+
+    iterator: Generator[int, Any, None] = (i for i in range(1000000))
+    iterable = [i for i in range(1000000)]
+    print(
+        str(sys.getsizeof(iterator)) + " bytes",
+        str(sys.getsizeof(iterable)) + " bytes",
+    )
 
 
 if __name__ == "__main__":
