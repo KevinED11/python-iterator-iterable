@@ -2,7 +2,7 @@
 los iteradores son un objeto que se puede iterar o recorrer y permiten un ahorro de memoria
 ya que sacan los valores de uno en uno a medida que se necesitan
 """
-from typing import Iterator, Generator, Any
+from typing import Iterator, Generator, Any, Self
 import sys
 
 
@@ -24,6 +24,23 @@ CITIES = [
     "Schenectady",
     "Albany",
 ]
+
+
+class ReverseWord:
+    """Iterator for looping over a sequence backwards."""
+    def __init__(self, word: str):
+        self.word = word
+        self.index = len(word)
+
+    def __iter__(self) -> Self:
+        return self
+
+    def __next__(self) -> str:
+        if self.index == 0:
+            raise StopIteration
+        self.index = self.index - 1
+
+        return self.word[self.index]
 
 
 def gen_squares(n: int) -> Iterator[int]:
@@ -63,6 +80,11 @@ def main() -> None:
         str(sys.getsizeof(iterator)) + " bytes",
         str(sys.getsizeof(iterable)) + " bytes",
     )
+
+    rev = ReverseWord("kevin")
+    iter(rev)
+    for char in rev:
+        print(char)
 
 
 if __name__ == "__main__":
