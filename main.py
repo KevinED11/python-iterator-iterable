@@ -43,6 +43,15 @@ class ReverseWord:
         return self.word[self.index]
 
 
+def reverse_word(word: str) -> Iterator[str]:
+    for index in range(len(word) - 1, -1, -1):
+        yield word[index]
+
+
+def reverse(word: str) -> Iterator[str]:
+    return (word[index] for index in range(len(word) - 1, -1, -1))
+
+
 def gen_squares(n: int) -> Iterator[int]:
     i = 1
     while i <= n:
@@ -81,10 +90,23 @@ def main() -> None:
         str(sys.getsizeof(iterable)) + " bytes",
     )
 
-    rev = ReverseWord("kevin")
-    iter(rev)
-    for char in rev:
+    for char in iter(ReverseWord("kevin")):
         print(char)
+
+    for char in reverse_word("kevin"):
+        print(char)
+
+    for char in reverse("spam"):
+        print(char)
+
+    print(sum(n for n in range(10)))
+
+    xvec = [10, 20, 30]
+    yvec = [20, 40, 60]
+    print(sum(x * y for x, y in zip(xvec, yvec)))
+
+    word = "golf"
+    print(list(word[i] for i in range(len(word) - 1, -1, -1)))
 
 
 if __name__ == "__main__":
